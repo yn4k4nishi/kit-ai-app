@@ -1,97 +1,63 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 
-class Node {
-    private:
-    int id;
-    int distance = -1;
-    std::vector<Node*> v;
+using Graph = std::vector<std::vector<int>>;
 
-    public:
-    Node(int id):id(id){}
-
-    void search(int distance = 0){
-        if(this->distance == -1){
-            this->distance = distance;
-        } else if(this->distance < distance){
-            return;
-        } else {
-            this->distance = distance;
-        }
-
-
-        for (auto i : v){
-            i->search(distance+1);
-        }
-        
-    }
-
-    void add_node(Node &node){
-        if(id == node.get_id())
-            return;
-        
-        v.push_back(&node);
-    }
-
-    int get_id(){ return id; }
-    int get_distance(){ return distance; }
+void dfs(Graph &graph, std::vector<int>& cat, int id, int c){
     
-    void reset(){
-        distance = -1;
+    if (cat[id] != -1) return;
+    
+    cat[id] = c;
+    for(auto g: graph[id]){
+        if(cat[g] != -1) continue;
+        dfs(graph, cat, g, c);
     }
-};
+}
 
 int main(){
-    int n,m;
-    std::cin >> n;
-    std::cin >> m;
 
-    std::vector<Node> nodes;
+    int n,m;
+    std::cin >> n >> m;
+
+    Graph graph(n);    
+    for (int i = 0; i < m; i++){
+        int a,b;
+        std::cin >> a >> b;
+        
+        graph[a].push_back(b);
+        graph[b].push_back(a);
+    }
+
+    std::vector<int> categories(n,-1);
     for (int i = 0; i < n; i++){
-        nodes.push_back(Node(i+1));
+        dfs(graph, categories, i, i);
     }
     
-    for (int i = 0; i < m; i++){
-        int id, id2;
-        std::cin >> id;
-        std::cin >> id2;
+    int q; std::cin >> q;
+    bool ans[q];
 
-        nodes[id].add_node(nodes[id2]);
-        nodes[id2].add_node(nodes[id]);
-    }
+    for (int i = 0; i < q; i++){
+        int start, goal;
+        std::cin >> start >> goal;
 
-    int q_num;
-    std::cin >> q_num;
-
-    bool ans[q_num];
-
-    for (int i = 0; i < q_num; i++){
-        int a, b;
-        std::cin >> a;
-        std::cin >> b;
-
-        nodes[a].search();
-        if(nodes[b].get_distance()>0){
+        if(categories[start] == -1){
+            ans[i] = false;
+        } else if(categories[goal] == -1){
+            ans[i] = false;
+        } else if(categories[start] == categories[goal]){
             ans[i] = true;
-        }else{
+        } else {
             ans[i] = false;
         }
-
-        for (auto i : nodes){
-            i.reset();
-        }
-
     }
 
-    for (int i = 0; i < q_num; i++){
+    for (int i = 0; i < q; i++){
         if(ans[i])
             std::cout << "yes" << std::endl;
         else
             std::cout << "no" << std::endl;
     }
     
-
-    
-
     return 0;
 }
