@@ -1,0 +1,3 @@
+/home/yn4k4nishi/workspace/kit-ai-app/Lecture04/ProblemA/build/CMakeFiles/rebuild_cache.dir
+/home/yn4k4nishi/workspace/kit-ai-app/Lecture04/ProblemA/build/CMakeFiles/edit_cache.dir
+/home/yn4k4nishi/workspace/kit-ai-app/Lecture04/ProblemA/build/CMakeFiles/problem_A.dir

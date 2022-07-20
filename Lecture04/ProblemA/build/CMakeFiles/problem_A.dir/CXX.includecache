@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yn4k4nishi/workspace/kit-ai-app/Lecture04/ProblemA/main.cpp
+iostream
+-
+vector
+-
+utility
+-
+
